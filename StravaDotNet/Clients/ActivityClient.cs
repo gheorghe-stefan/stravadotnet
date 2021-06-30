@@ -980,6 +980,9 @@ namespace Strava.Clients
         /// <returns>A list of activities that was recorded between 'after' and 'before'.</returns>
         public List<ActivitySummary> GetActivities(DateTime after, DateTime before, int page, int perPage)
         {
+
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
+
             string getUrl = string.Format("{0}?after={1}&before={2}&page={3}&per_page={4}&access_token={5}",
                 Endpoints.Activities,
                 DateConverter.GetSecondsSinceUnixEpoch(after),

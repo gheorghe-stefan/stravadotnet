@@ -44,6 +44,8 @@ namespace Strava.Clients
             }
 
             Authentication = auth;
+
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
         }
     }
 }
