@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyVersion>3.6.0.0</AssemblyVersion>
     <Copyright>Copyright © Sascha Simon 2014-2016</Copyright>
     <Description>Use the Strava API in your .NET applications. (.NET 5 version)</Description>

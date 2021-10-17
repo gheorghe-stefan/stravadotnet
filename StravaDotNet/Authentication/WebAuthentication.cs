@@ -59,7 +59,7 @@ namespace Strava.Authentication
         /// if the default port 1895 is already used on your machine.</param>
         public void GetTokenAsync(string clientId, string clientSecret, Scope scope, int callbackPort = 1895)
         {
-            LocalWebServer server = new LocalWebServer(string.Format("http://*:{0}/", callbackPort));
+            LocalWebServer server = new LocalWebServer($"http://*:{callbackPort}/");
             server.ClientId = clientId;
             server.ClientSecret = clientSecret;
 
@@ -89,21 +89,26 @@ namespace Strava.Authentication
             switch (scope)
             {
                 case Scope.Full:
-                    scopeLevel = "view_private,write";
+                    scopeLevel = "read_all,profile:read_all,activity:read_all,profile:write,activity:write";
                     break;
                 case Scope.Public:
-                    scopeLevel = "public";
+                    scopeLevel = "read,activity:read";
                     break;
                 case Scope.ViewPrivate:
-                    scopeLevel = "view_private";
+                    scopeLevel = "read_all,profile:read_all,activity:read_all";
                     break;
                 case Scope.Write:
-                    scopeLevel = "write";
+                    scopeLevel = "read,activity:read,profile:write,activity:write";
                     break;
             }
 
-            Process process = new Process();
-            process.StartInfo = new ProcessStartInfo(string.Format("{0}?client_id={1}&response_type=code&redirect_uri=http://localhost:{2}&scope={3}&approval_prompt=auto", url, clientId, callbackPort, scopeLevel));
+            var processFileName = $"{url}?client_id={clientId}&response_type=code&redirect_uri=http://localhost:{callbackPort}&scope={scopeLevel}&approval_prompt=auto";
+
+            Process process = new();
+            process.StartInfo = new ProcessStartInfo(processFileName)
+            {
+                UseShellExecute = true
+            };
             process.Start();
         }
     }
